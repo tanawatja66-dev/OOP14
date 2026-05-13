@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body class="auth-page">
+
+<!-- ========================= -->
+<!-- BACKGROUND -->
+<!-- ========================= -->
+
+<div class="bg-circle circle1"></div>
+<div class="bg-circle circle2"></div>
+
+<!-- ========================= -->
+<!-- REGISTER CARD -->
+<!-- ========================= -->
+
+<div class="auth-container">
+
+    <div class="logo">
+
+        📝
+
+    </div>
+
+    <h1>
+
+        Create Account
+
+    </h1>
+
+    <p class="subtitle">
+
+        สมัครสมาชิกเพื่อเริ่มใช้งานระบบ
+
+    </p>
+
+    <!-- ========================= -->
+    <!-- FORM -->
+    <!-- ========================= -->
+
+    <form method="POST">
+
+        <!-- FULL NAME -->
+
+        <div class="input-group">
+
+            <input type="text"
+                   name="fullName"
+                   placeholder="ชื่อ-นามสกุล"
+                   required>
+
+        </div>
+
+        <!-- EMAIL -->
+
+        <div class="input-group">
+
+            <input type="email"
+                   name="email"
+                   placeholder="Email"
+                   required>
+
+        </div>
+
+        <!-- USERNAME -->
+
+        <div class="input-group">
+
+            <input type="text"
+                   name="username"
+                   placeholder="Username"
+                   required>
+
+        </div>
+
+        <!-- PASSWORD -->
+
+        <div class="input-group">
+
+            <input type="password"
+                   name="password"
+                   placeholder="Password"
+                   required>
+
+        </div>
+
+        <!-- BUTTON -->
+
+        <button type="submit"
+                class="login-btn">
+
+            สมัครสมาชิก
+
+        </button>
+
+    </form>
+
+    <!-- LOGIN -->
+
+    <p class="register-text">
+
+        มีบัญชีอยู่แล้ว ?
+
+        <a href="/login">
+
+            Login
+
+        </a>
+
+    </p>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body class="auth-page">
+
+<!-- ========================= -->
+<!-- BACKGROUND -->
+<!-- ========================= -->
+
+<div class="bg-circle circle1"></div>
+<div class="bg-circle circle2"></div>
+
+<!-- ========================= -->
+<!-- LOGIN CARD -->
+<!-- ========================= -->
+
+<div class="auth-container">
+
+    <div class="logo">
+
+        💰
+
+    </div>
+
+    <h1>
+
+        Welcome Back
+
+    </h1>
+
+    <p class="subtitle">
+
+        เข้าสู่ระบบจัดการรายรับรายจ่าย
+
+    </p>
+
+    <!-- ========================= -->
+    <!-- FORM -->
+    <!-- ========================= -->
+
+    <form method="POST">
+
+        <!-- USERNAME -->
+
+        <div class="input-group">
+
+            <input type="text"
+                   name="username"
+                   placeholder="Username"
+                   required>
+
+        </div>
+
+        <!-- PASSWORD -->
+
+        <div class="input-group">
+
+            <input type="password"
+                   name="password"
+                   placeholder="Password"
+                   required>
+
+        </div>
+
+        <!-- BUTTON -->
+
+        <button type="submit"
+                class="login-btn">
+
+            Login
+
+        </button>
+
+    </form>
+
+    <!-- REGISTER -->
+
+    <p class="register-text">
+
+        ยังไม่มีบัญชี ?
+
+        <a href="/register">
+
+            สมัครสมาชิก
+
+        </a>
+
+    </p>
+
+</div>
+
+</body>
+</html>

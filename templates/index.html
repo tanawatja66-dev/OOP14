@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ระบบรายรับรายจ่าย</title>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Chart.js -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- TOP BAR -->
+    <!-- ========================= -->
+
+    <div class="top-bar">
+
+        <h1>💰 ระบบรายรับรายจ่าย</h1>
+
+        <div class="top-buttons">
+
+            <button class="dark-btn"
+                    onclick="toggleDarkMode()">
+
+                🌙
+
+            </button>
+
+            <a href="/logout" class="logout-btn">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- PROFILE -->
+    <!-- ========================= -->
+
+    <div class="profile-box">
+
+        <h3>👤 ข้อมูลผู้ใช้</h3>
+
+        <p>
+
+            <strong>ชื่อ:</strong>
+
+            <span>{{ user.fullName }}</span>
+
+        </p>
+
+        <p>
+
+            <strong>Username:</strong>
+
+            <span>{{ user.username }}</span>
+
+        </p>
+
+        <p>
+
+            <strong>Email:</strong>
+
+            <span>{{ user.email }}</span>
+
+        </p>
+
+        <p>
+
+            <strong>วันที่สมัคร:</strong>
+            
+            <span>{{ user.registerDate }}</span>
+        </p>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- SUMMARY -->
+    <!-- ========================= -->
+
+    <div class="summary">
+
+        <div class="card income">
+
+            <h3>รายรับรวม</h3>
+
+            <p id="totalIncome">
+
+                0 บาท
+
+            </p>
+
+        </div>
+
+        <div class="card expense">
+
+            <h3>รายจ่ายรวม</h3>
+
+            <p id="totalExpense">
+
+                0 บาท
+
+            </p>
+
+        </div>
+
+        <div class="card balance">
+
+            <h3>ยอดคงเหลือ</h3>
+
+            <p id="balance">
+
+                0 บาท
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- DASHBOARD -->
+    <!-- ========================= -->
+
+    <div class="dashboard">
+
+        <div class="dashboard-card">
+
+            <h3>วันนี้ใช้ไป</h3>
+
+            <p id="todayExpense">
+
+                0 บาท
+
+            </p>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h3>เดือนนี้รายรับ</h3>
+
+            <p id="monthIncome">
+
+                0 บาท
+
+            </p>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h3>เดือนนี้รายจ่าย</h3>
+
+            <p id="monthExpense">
+
+                0 บาท
+
+            </p>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h3>ใช้เยอะสุด</h3>
+
+            <p id="topCategory">
+
+                -
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- FORM -->
+    <!-- ========================= -->
+
+    <div class="form">
+
+        <input type="date"
+               id="date">
+
+        <input type="text"
+               id="detail"
+               placeholder="รายละเอียด">
+
+        <input type="number"
+               id="amount"
+               placeholder="จำนวนเงิน">
+
+        <select id="type">
+
+            <option value="income">
+
+                รายรับ
+
+            </option>
+
+            <option value="expense">
+
+                รายจ่าย
+
+            </option>
+
+        </select>
+
+        <select id="category">
+
+            <option value="อาหาร">
+                อาหาร
+            </option>
+
+            <option value="เดินทาง">
+                เดินทาง
+            </option>
+
+            <option value="เงินเดือน">
+                เงินเดือน
+            </option>
+
+            <option value="ช้อปปิ้ง">
+                ช้อปปิ้ง
+            </option>
+
+            <option value="อื่นๆ">
+                อื่นๆ
+            </option>
+
+        </select>
+
+        <button onclick="addTransaction()">
+
+            เพิ่มรายการ
+
+        </button>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- FILTER -->
+    <!-- ========================= -->
+
+    <div class="filter-box">
+
+        <input type="text"
+               id="search"
+               placeholder="ค้นหา..."
+               onkeyup="showTransactions()">
+
+        <input type="month"
+               id="filterMonth"
+               onchange="showTransactions()">
+
+        <select id="filterCategory"
+                onchange="showTransactions()">
+
+            <option value="">
+                ทุกหมวดหมู่
+            </option>
+
+            <option value="อาหาร">
+                อาหาร
+            </option>
+
+            <option value="เดินทาง">
+                เดินทาง
+            </option>
+
+            <option value="เงินเดือน">
+                เงินเดือน
+            </option>
+
+            <option value="ช้อปปิ้ง">
+                ช้อปปิ้ง
+            </option>
+
+            <option value="อื่นๆ">
+                อื่นๆ
+            </option>
+
+        </select>
+
+        <select id="sortBy"
+                onchange="showTransactions()">
+
+            <option value="newest">
+                ใหม่ล่าสุด
+            </option>
+
+            <option value="oldest">
+                เก่าสุด
+            </option>
+
+            <option value="high">
+                จำนวนมากสุด
+            </option>
+
+            <option value="low">
+                จำนวนน้อยสุด
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- TABLE -->
+    <!-- ========================= -->
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>วันที่</th>
+
+                <th>รายละเอียด</th>
+
+                <th>หมวดหมู่</th>
+
+                <th>ประเภท</th>
+
+                <th>จำนวนเงิน</th>
+
+                <th>จัดการ</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="transactionList">
+
+        </tbody>
+
+    </table>
+
+    <!-- ========================= -->
+    <!-- CHART -->
+    <!-- ========================= -->
+
+    <div class="chart-container">
+
+        <h2>📈 สรุปรายจ่าย</h2>
+
+        <canvas id="expenseChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script src="{{ url_for('static', filename='auth.js') }}"></script>
+
+</body>
+</html>
